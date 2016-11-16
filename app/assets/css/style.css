@@ -272,6 +272,8 @@ main {
     border: 1px dashed #5abf5a;
     background-color: #F5FDFA !important;
     color: #5abf5a !important;
+    max-width: 80%;
+    max-height: 200px;
 }
 
 .contr_det_nav {

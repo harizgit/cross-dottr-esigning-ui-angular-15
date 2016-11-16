@@ -66,7 +66,11 @@ $scope.selectedDroppables = '';
                                         this.x = ui.helper.clone().addClass('droppables');
                                         ui.helper.remove();
                                         console.log(this.x.find('.ui-resizable-handle'))
-                                           //  angular.element('.ui-resizable-handle').remove();
+                                    
+
+                                        //this.x.removeClass('panel-default draggable ui-draggable ui-draggable-handle ' +'ui-resizable ui-draggable-dragging');
+                                        this.x.find('.ui-resizable-handle').remove();
+
                                         this.x.resizable();
                                         this.x.appendTo(angular.element(this));
 
@@ -105,20 +109,32 @@ $scope.selectedDroppables = '';
                                             isEnable: 0
 
                                         };
-                                        this.x.attr('position', originalX + '-' + originalY + '-' + angular.element(ui.draggable)[0].id + '-' + thisId + '-' + $scope.contractDetails.document.id)
 
-                                        /* remove elememt */
                                         this.x.attr('id',generateRandomString(10).trim());
                                         jQuery('body').on('click',this.x,function(event){
                                         $scope.selectedDroppables = jQuery(event.target).parents('.droppables').attr('id');
                                         console.log('$scope.selectedDroppables',$scope.selectedDroppables,event);
                                         });
+
+
+                                        this.x.attr('position', originalX + '-' + originalY + '-' + angular.element(ui.draggable)[0].id + '-' + thisId + '-' + $scope.contractDetails.document.id)
+                                        
+
                                         /* remove elememt  finish*/                 
+                                        var mr = 0;
+                                        if(originalX>(this.clientWidth/2)){
+                                            var mr = -50
+                                        }
+
                                         var dragItem = this.x,
                                             contextItem = angular.element(dragItem).find('.nav_con_det_menu'),
                                             popupId = contextItem.attr('modal');
-                                        contextItem.contextMenu('#' + popupId, {});
-                                       // angular.element('.ui-resizable-handle').remove();
+                                            contextItem.contextMenu('#' + popupId, {
+                                            'position': 'bottom',
+                                            'displayAround': 'trigger',
+                                            'horAdjust':mr
+                                        });
+                                      
                                     }
 
                                 }
