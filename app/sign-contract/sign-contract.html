@@ -1,0 +1,29 @@
+<div class="row mb20">
+    <div class="col-md-12">
+        <div class="document-sign">
+            <div class="document-content">
+                <div class="droppable" ng-repeat="thumbnail in thumbnails track by $index" class="ui segment" style="width:100%;height:auto;margin-bottom: 10px;float: left;clear:both;" id="{{$index+1}}">
+                    <img style="width: 100%;height: auto;" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}">
+                </div>
+                <span ng-repeat="filed in fileds track by $index" style="position: absolute; top:{{filed.yOrigin}}px; left: {{filed.xOrigin}}px;border: 2px solid green;">
+                	<span ng-if="filed.fieldType == 'SIGNATURE' || filed.fieldType == 'INITIALS'" ng-click="shoSignaturePad()" id="{{filed.id}}">{{filed.fieldType}} </span>
+                	<input type="text" ng-if="filed.fieldType == 'NAME' || filed.fieldType == 'FREE_TEXT' || filed.fieldType == 'DATE'" ng-model="filedVal[filed.fieldType]" id="{{filed.id}}" ng-blur="saveText(filed.id);" >
+                    <input type="file" ng-if="filed.fieldType == 'FILE_UPLOAD'" > 
+
+                </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div style="width: 100%; float: left; clear: both;  visibility: hidden; height: 0;" id="signature-container">
+    <div id="signature-pad" class="m-signature-pad">
+        <div class="m-signature-pad--body">
+            <canvas width="100px" height="100px"></canvas>
+        </div>
+        <div class="m-signature-pad--footer">
+            <button type="button" class="button close" data-action="close">Close</button>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+            <button type="button" class="button save" data-action="save">Save</button>
+        </div>
+    </div>
+</div>

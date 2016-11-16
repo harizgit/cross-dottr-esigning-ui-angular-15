@@ -1,0 +1,126 @@
+<!-- <div class="">
+    <div class="col-md-12">
+    <div class="ui grid">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="ui header">Contracts </h1>
+                <div class="ui segment" ng-if="contracts.length===0">No Contracts Created Yet</div>
+                <table class="ui selectable single line table" id="customer-lst" ng-if="contracts.length > 0">
+                    <thead>
+                        <tr>
+                            <th>
+                                Name
+                            </th>
+                            <th>
+                                Status
+                            </th>
+                            <th>
+                                Last Modified
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-link">
+                        <tr ng-repeat="contract in contracts track by $index">
+                            <td>
+                                <span><a href="/#!/contract/{{contract.id}}">{{contract.name}}</a></span>
+                            </td>
+                            <td>
+                                <span>{{contract.status}}</span>
+                            </td>
+                            <td>
+                                <span>{{contract.modifiedOn  }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            
+        </div>
+    </div>
+    </div>
+</div> -->
+
+
+
+<div class="row">
+        <div class="col-sm-12 col-md-8">
+        <div class="box">
+          <div class="box-header">
+            <h2>Documents</h2>
+          </div>
+          <table class="table">
+            <thead>
+              <tr>
+                <th style="width:50px;">
+                  <label class="ui-check m-a-0">
+                    <input type="checkbox"><i></i>
+                  </label>
+                </th>
+                <th>Title</th>
+                <th>Last Modified</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr ng-repeat="contract in contracts track by $index">
+                <td style="width:50px;">
+                  <label class="ui-check m-a-0">
+                    <input type="checkbox"><i></i>
+                  </label>
+                </td>
+                <td>
+                  <a class="table-hyperlink" href="/#!/contract/{{contract.id}}"><strong>{{contract.document.fileName}}</strong></a>
+                  <span class="status status-ofs">{{contract.status}}</span>
+                </td>
+                <td>{{contract.modifiedOn  | date:'yyyy-MM-dd HH:mm:ss Z'}} 
+                <!-- Today, 05:23 PM -->
+                </td>
+                <td></td>
+              </tr>
+             
+            </tbody>
+          </table>
+        </div>
+        </div>
+      <div class="col-sm-12 col-md-4">
+            <div class="box">
+                <div class="box-header">
+                    <h3>Activity</h3>
+                </div>
+                <div class="box-body">
+                    <div class="m-b m-l">
+                      <div class="sl-item">
+                    <a herf class="sl-left list-left">
+                        <span class="w-40 circle _600 text-white grey-200">
+                            LE
+                        </apan>
+                      </a>
+                        <div class="sl-content">
+                          <a href><b>Louis Elliott</b></a><span class="m-l-sm sl-date">5 min ago</span>
+                          <div>assign you a task <a href class="text-info">Mockup Design</a>.</div>
+                        </div>
+                      </div>
+                      <div class="sl-item">
+                        <div class="sl-left">
+                          <img src="assets/images/a5.jpg" class="img-circle">
+                        </div>
+                        <div class="sl-content">
+                          <a href><b>Terry Moore</b></a><span class="m-l-sm sl-date">10 min ago</span>
+                          <div>Follow up to close deal</div>
+                        </div>
+                      </div>
+                      <div class="sl-item">
+                        <div class="sl-left">
+                          <img src="assets/images/a8.jpg" class="img-circle">
+                        </div>
+                        <div class="sl-content">
+                          <a href><b>Walter Paler</b></a><span class="m-l-sm sl-date">1 hour ago</span>
+                          <div>was added to Repo</div>
+                        </div>
+                      </div>
+                    </div>
+                    <a href class="btn btn-sm secondary">Load More</a>
+                </div>
+            </div>
+        </div>
+

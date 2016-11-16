@@ -1,0 +1,410 @@
+<br style="clear: both;">
+<!-- <div class="padding container"> -->
+<!--  <div class="row mb10">
+        <div class="col-md-12">
+          <div class="dragable-action">
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-pencil"></i> Signature</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Initials</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Name</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Date Picker</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-terminal"></i> Free Text</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-check-square"></i> Checkbox</button>
+            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Required Upload</button>
+          </div>
+        </div>
+      </div> -->
+<!-- </div> -->
+<div class="">
+    <div class="ui grid">
+        <!--   <div class="row" id="send-signee" style="display: none;">
+            <section> {{contract.document.fileName}}</section>
+            <section>
+                <h1>Choosen Recipient</h1>
+                <div ng-repeat="party in contract.parties">
+                    Name: {{party.user.fullName}}
+                    Email: {{party.user.emailAddress}}
+                </div>
+                <button id="send-sign" ng-click="sendForSign()">Send for signing</button>
+            </section>
+        </div>
+ -->
+        <div id="send-signee" style="display: none;">
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav>
+                        <ol class="cd-multi-steps text-top">
+                            <li class="visited"><a href="#0">Choose Recepients</a></li>
+                            <li class="visited"><a href="#0">Add Smart Fields</a></li>
+                            <li class="current"><span>Review & Send</span></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3>Uploaded Document</h3>
+                </div>
+                <div class="box-body white">
+                    <div><i class="text-md fa fa-file-pdf-o mr10"></i> <strong style="word-wrap: break-word;">{{contract.document.fileName}}</strong>
+                        <a href class="nav-link pull-right"></a>
+                    </div>
+                </div>
+            </div>
+            <div class="box">
+                <div class="box-header">
+                    <h3>Choosen Recipient</h3>
+                </div>
+                <div class="box-body white mb20" ng-repeat="party in contract.parties">
+                    <form role="form">
+                        <div class="form-group">
+                            <div class="text-muted">Name</div>
+                            <div>{{party.user.fullName}}</div>
+                        </div>
+                        <div class="form-group">
+                            <div class="text-muted">Email</div>
+                            <div>{{party.user.emailAddress}}</div>
+                        </div>
+                    </form>
+                </div>
+                <button id="send-sign" ng-click="sendForSign()" class="btn success">Send for Signing <i class="material-icons md-24"></i></button>
+                <!-- <a href="index.html" class="btn success">Send for Signing <i class="material-icons md-24"></i></a> -->
+            </div>
+        </div>
+        <div class="row" id="contract-details">
+            <div class="row">
+                <div class="col-sm-12">
+                    <nav>
+                        <ol class="cd-multi-steps text-top">
+                            <li class="visited"><a href="#0">Choose Recepients</a></li>
+                            <li class="current"><a href="#0">Add Smart Fields</a></li>
+                            <li><span>Review & Send</span></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <!-- <h1 class="ui header">Contract Details /<span style="font-weight: normal;">{{contract.name}}</span></h1> -->
+                <span id="pos"></span>
+                <div class="container menu-contanier" style="float: left;
+width: 100%;margin-top: 0px; ">
+                    <div class="row">
+                        <div style="float: left;">
+                            <div class="col-md-12 test">
+                                <div class="menu-items">
+                                    <div id="popup-container1" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right;">
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                            
+                                            <li style="font-weight: bold; margin-top: 20px;"><a href="#">Who Signs Here?</a></li>
+                                            <li>
+                                                <select id="SIGNATURE" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+                                            </li>
+                                           <!--  <li style="margin-bottom: 10px;">
+                                                <label>
+                                                    <input type="checkbox" id="cbox1" value="first_checkbox"> Make Mandatory</label>
+                                            </li> -->
+                                           
+                                             <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                <!-- //Initial Popup -->
+                                   <div id="popup-container2" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right;">
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                             <li style="font-weight: bold; margin-top: 20px;"><a href="#">Chose Initial</a></li>
+                                            <li style="margin-bottom: 20px">
+                                                <select id="INITIALS" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+
+                                            </li>
+                                            <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    <!-- Name Popup -->
+
+                                    <div id="popup-container3" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right; >
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                             <li style="font-weight: bold; margin-top: 20px;"><a href="#">Select Name</a></li>
+                                            <li style="margin-bottom: 20px">
+                                                <select id="NAME" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+
+                                            </li>
+                                            <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+
+                                    <div id="popup-container4" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right; ">
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                             <li style="font-weight: bold; margin-top: 15px;"><a href="#">Select Party</a></li>
+                                            <li style="margin-bottom: 15px">
+                                                <select id="DATE" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+
+                                            </li>
+                                            <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                     <div id="popup-container5" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right;">
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                             <li style="font-weight: bold; margin-top: 15px;"><a href="#">Select Party</a></li>
+                                            <li style="margin-bottom: 15px">
+                                                <select id="FREE_TEXT" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+
+                                            </li>
+                                            <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+
+                                    
+                                    <div id="popup-container6" class="popup_style">
+                                        <ul class="context_list">
+                                            <li>
+                                                <select id="CHECK_BOX" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+                                            </li>
+                                            <li class="button_li">
+                                                <button type="button" style="padding: 0px;">Close</button><button ng-click="removeElement($event)" type="button" class="button_style">Remove</button>
+                                            </li>
+                                            <li><b>"Text Field"</b> Content Here</li>
+                                        </ul>
+                                    </div>
+
+                                     <div id="popup-container7" class="popup_style">
+                                        <ul class="context_list" ng-click="$event.stopPropagation()">
+                                            <li style="text-align: right; ">
+                                                <button type="button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
+                                                <i class="fa fa-times" aria-hidden="true"></i>
+                                                </button>
+                                            </li>
+                                             <li style="font-weight: bold; margin-top: 15px;"><a href="#">Select Party</a></li>
+                                            <li style="margin-bottom: 15px">
+                                                <select id="DATE" class="selection-element">
+                                                    <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
+                                                        {{party.user.fullName}}
+                                                    </option>
+                                                </select>
+
+                                            </li>
+                                            <li style="text-align: right; border-top: 1px solid #f3f3f4;">
+
+                                                <button ng-click="removeElement()" type="button" class="btn btn-default dlt_btn" title="Delete">
+                                                    <i class="fa fa-trash" aria-hidden="true"></i>
+                                                </button>
+                                                <button ng-click="hideElement()" type="button" class="btn btn-default btn_ok"
+                                                title="OK">
+                                                    <i class="fa fa-check" aria-hidden="true"></i>
+                                                </button>
+                                                <!-- <button type="button" class="button_style" (click)="closePopup1($event)">OK</button> -->
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="panel panel-default draggable text-center signature" id="SIGNATURE">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container1">
+                                                    <i class="fa fa-pencil"></i>Signature
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default draggable text-center initials" id="INITIALS">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container2">
+                                                    <i class="material-icons md-20"></i>Initials
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default draggable text-center name" id="NAME">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container3">
+                                                    <i class="material-icons md-20"></i>Name
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default draggable text-center date-container" id="DATE">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container4">
+                                                    <i class="material-icons md-20"></i> Date Picker
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="panel panel-default draggable text-center free-text" id="FREE_TEXT">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container5">
+                                                    <i class="fa fa-terminal"></i> Free Text
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- <div class="panel panel-default draggable text-center checkbox-container" id="CHECK_BOX">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container6">
+                                                    <i class="fa fa-check-square"></i> Checkbox
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                                    <div class="panel panel-default draggable text-center uplaod-file" id="FILE_UPLOAD">
+                                        <div class="panel-body">
+                                            <div id="draggable-signature" class="draggable-signature">
+                                                <div class="nav_con_det_menu" modal="popup-container7">
+                                                    <i class="material-icons md-20"></i> Required Upload
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row mb20">
+                                    <div class="col-md-12">
+                                        <div class="document-sign">
+                                            <div class="document-content">
+                                                <div class="droppable" ng-repeat="thumbnail in thumbnails track by $index" class="ui segment" style="width:100%;height:auto;margin-bottom: 10px;float: left;clear:both;" id="{{$index+1}}">
+                                                <img  style="width: 100%;height: auto;" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="page-action col-md-12">
+                                        <a href="creator-step1.html" class="btn secondary">Back</a>
+                                        <button ng-click="updateContract()" class="btn success">Review <i class="material-icons md-24"></i></button>
+                                        <a href="index.html" class="btn secondary">Cancel</a>
+                                    </div>
+                                </div>
+                                <!-- <div style="width: 100%; float: left; ">
+                                    <div class="droppable" ng-repeat="thumbnail in thumbnails track by $index" class="ui segment" style="width:100%;float: left;clear:both;background-repeat:no-repeat;background-image: url('http://staging-1.crossdottr.com/files/{{thumbnail.name}}')" id="{{$index+1}}">
+                                    </div>
+                                </div> -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--  <aside class="four wide computer sixteen wide tablet column">
+                <time-line *ngIf="contractId" contractId="{{contractId}}"></time-line>
+            </aside> -->
+        </div>
+    </div>
+</div>
+<!-- <div id="overlay"> -->
+<!-- </div> -->
+<div style="width: 100%; float: left; clear: both;  visibility: hidden; height: 0;" id="signature-container">
+    <div id="signature-pad" class="m-signature-pad">
+        <div class="m-signature-pad--body">
+            <canvas width="100px" height="100px"></canvas>
+        </div>
+        <div class="m-signature-pad--footer">
+            <button type="button" class="button close" data-action="close">Close</button>
+            <button type="button" class="button clear" data-action="clear">Clear</button>
+            <button type="button" class="button save" data-action="save">Save</button>
+        </div>
+    </div>
+</div>
