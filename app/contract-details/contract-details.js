@@ -29,9 +29,9 @@ angular.module('myApp.contractDetails', ['ngRoute'])
             // })
 
         })
-$scope.selectedDroppables = '';
- httpRequestService.get('/fields')
-            .success(function(response) { console.log(response)})
+        $scope.selectedDroppables = '';
+        httpRequestService.get('/fields')
+            .success(function(response) { console.log(response) })
 
         httpRequestService.get('/contract/' + $routeParams.ID)
             .success(function(response) {
@@ -54,29 +54,35 @@ $scope.selectedDroppables = '';
                             angular.element(".draggable").draggable({
                                 helper: 'clone',
                                 cursor: 'move',
-                                snap: '.droppable',
-                                revert: "invalid"
+                                // snap: '.droppable',
+                                appendTo: '.document-content',
+                                containment:'#dropp',
+                                revert: "invalid",
 
-                            });
-                            var obj = $scope.contractDetails;
+
+                            }); 
+                            var obj = $scope.contractDetails;   
                             angular.element(".droppable").droppable({
+
                                 drop: function(e, ui) {
                                     if (angular.element(ui.draggable)[0].id != "") {
 
                                         this.x = ui.helper.clone().addClass('droppables');
                                         ui.helper.remove();
                                         console.log(this.x.find('.ui-resizable-handle'))
-                                    
-
-                                        //this.x.removeClass('panel-default draggable ui-draggable ui-draggable-handle ' +'ui-resizable ui-draggable-dragging');
                                         this.x.find('.ui-resizable-handle').remove();
-
-                                        this.x.resizable();
+                                        this.x.resizable({
+                                            // helper: 'ui-resizable-helper',
+                                            containment: angular.element(this),
+                                            // tolerance: 'fit',
+                                        });
                                         this.x.appendTo(angular.element(this));
 
                                         this.x.draggable({
                                             helper: 'ui-resizable-helper',
-                                            containment: angular.element(this),
+                                            // containment: angular.element(this),
+                                            containment:'#dropp',
+
                                             tolerance: 'fit',
                                             stop: function(event, ui) {
                                                 console.log(event.target.parentElement.id)
@@ -89,7 +95,7 @@ $scope.selectedDroppables = '';
                                                 // $('#finalY').text('Final X: ' + finalyPos);
                                             }
                                         });
-                                       // this.x.resizable();
+                                        // this.x.resizable();
                                         var dropItemPos = angular.element(this).offset(),
                                             dragItemPos = this.x.offset(),
                                             originalY = dragItemPos.top - dropItemPos.top,
@@ -110,31 +116,31 @@ $scope.selectedDroppables = '';
 
                                         };
 
-                                        this.x.attr('id',generateRandomString(10).trim());
-                                        jQuery('body').on('click',this.x,function(event){
-                                        $scope.selectedDroppables = jQuery(event.target).parents('.droppables').attr('id');
-                                        console.log('$scope.selectedDroppables',$scope.selectedDroppables,event);
+                                        this.x.attr('position', originalX + '-' + originalY + '-' + angular.element(ui.draggable)[0].id + '-' + thisId + '-' + $scope.contractDetails.document.id)
+                                        this.x.attr('id', generateRandomString(10).trim());
+                                        jQuery('body').on('click', this.x, function(event) {
+                                            $scope.selectedDroppables = jQuery(event.target).parents('.droppables').attr('id');
+                                            console.log('$scope.selectedDroppables', $scope.selectedDroppables, event);
                                         });
 
-
-                                        this.x.attr('position', originalX + '-' + originalY + '-' + angular.element(ui.draggable)[0].id + '-' + thisId + '-' + $scope.contractDetails.document.id)
-                                        
-
-                                        /* remove elememt  finish*/                 
                                         var mr = 0;
-                                        if(originalX>(this.clientWidth/2)){
+                                        if (originalX > (this.clientWidth / 2)) {
                                             var mr = -50
                                         }
-
                                         var dragItem = this.x,
                                             contextItem = angular.element(dragItem).find('.nav_con_det_menu'),
                                             popupId = contextItem.attr('modal');
-                                            contextItem.contextMenu('#' + popupId, {
-                                            'position': 'bottom',
+                                        contextItem.contextMenu('#' + popupId, {
+
+                                            'horAdjust': mr,
                                             'displayAround': 'trigger',
-                                            'horAdjust':mr
+                                            'position': 'bottom'
                                         });
-                                      
+                                        // var dragItem = this.x,
+                                        //     contextItem = angular.element(dragItem).find('.nav_con_det_menu'),
+                                        //     popupId = contextItem.attr('modal');
+                                        // contextItem.contextMenu('#' + popupId, {});
+                                        // angular.element('.ui-resizable-handle').remove();
                                     }
 
                                 }
@@ -150,12 +156,12 @@ $scope.selectedDroppables = '';
 
 
 
-        $scope.hideElement = function(event) { 
+        $scope.hideElement = function(event) {
             angular.element('.popup_style').hide();
         }
-        
+
         $scope.removeElement = function() {
-            angular.element("#"+$scope.selectedDroppables).remove();
+            angular.element("#" + $scope.selectedDroppables).remove();
             angular.element('.popup_style').hide();
         };
 
@@ -217,22 +223,24 @@ $scope.selectedDroppables = '';
             httpRequestService.post('/send/contract/' + $scope.contractDetails.id)
                 .success(function(response) {
                     console.log(response);
-                    //  angular.element('#send-signee').show();
-                    // angular.element('#contract-details').remove();
+                    $('#send-signee-review').show();
+                    angular.element('#send-signee').remove()
+                        //  angular.element('#send-signee').show();
+                        // angular.element('#contract-details').remove();
 
                 })
         }
 
-        $('.popup_style').appendTo('.droppable');
 
-        function generateRandomString(length){
-        var text = " ";
-        var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
 
-        for( var i=0; i < length; i++ )
-    {    text += charset.charAt(Math.floor(Math.random() * charset.length));
-        }
-        return text;
+        function generateRandomString(length) {
+            var text = " ";
+            var charset = "abcdefghijklmnopqrstuvwxyz0123456789";
+
+            for (var i = 0; i < length; i++) {
+                text += charset.charAt(Math.floor(Math.random() * charset.length));
+            }
+            return text;
         }
 
     });

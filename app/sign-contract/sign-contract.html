@@ -1,4 +1,9 @@
+
+<div id="success" style="display:none; color: green;font-size: 20px;margin-top: 140px;">
+    Successfully signed the contract.
+</div>    
 <div class="row mb20">
+    <button ng-click="signContract()">Sign</button
     <div class="col-md-12">
         <div class="document-sign">
             <div class="document-content">
@@ -6,10 +11,11 @@
                     <img style="width: 100%;height: auto;" src="http://staging-1.crossdottr.com/files/{{thumbnail.name}}">
                 </div>
                 <span ng-repeat="filed in fileds track by $index" style="position: absolute; top:{{filed.yOrigin}}px; left: {{filed.xOrigin}}px;border: 2px solid green;">
-                	<span ng-if="filed.fieldType == 'SIGNATURE' || filed.fieldType == 'INITIALS'" ng-click="shoSignaturePad()" id="{{filed.id}}">{{filed.fieldType}} </span>
-                	<input type="text" ng-if="filed.fieldType == 'NAME' || filed.fieldType == 'FREE_TEXT' || filed.fieldType == 'DATE'" ng-model="filedVal[filed.fieldType]" id="{{filed.id}}" ng-blur="saveText(filed.id);" >
-                    <input type="file" ng-if="filed.fieldType == 'FILE_UPLOAD'" > 
-
+                    <span ng-if="filed.fieldType == 'SIGNATURE' || filed.fieldType == 'INITIALS'" ng-click="shoSignaturePad()" id="{{filed.id}}" class="{{filed.fieldType}}">{{filed.fieldType}} <img id="img-tag" style="height: 22px;" src="{{utl}}"></span>
+                    <input type="text" ng-if="filed.fieldType == 'NAME' || filed.fieldType == 'FREE_TEXT'"  id="{{filed.id}}" ng-blur="saveText(filed.id);" value="{{filed.text}}" ng-readonly="filed.text">
+                    <input type="file" ng-if="filed.fieldType == 'FILE_UPLOAD'" class="upload-file" id="{{filed.id}}" onchange="angular.element(this).scope().saveFile(this.files)" > 
+                    <!-- <span ng-if="filed.fieldType == 'NAME' || filed.fieldType == 'FREE_TEXT'  && filed.text != ''">{{filed.text}}</span> -->
+                    <input type="text" ng-if="filed.fieldType == 'DATE' "  id="{{filed.id}}" ng-blur="saveText(filed.id);" ng-model="filedVal[filed.fieldType]" readonly>
                 </span>
             </div>
         </div>

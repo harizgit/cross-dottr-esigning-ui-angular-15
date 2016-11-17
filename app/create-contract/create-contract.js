@@ -82,6 +82,9 @@ angular.module('myApp.createContract', ['ngRoute'])
 
 
                  },
+                 error: function () {
+                    $window.location.href = '/#!/login';
+                },
                 //  error: this.errorHandler,
                 // Form data
                 data: formData,

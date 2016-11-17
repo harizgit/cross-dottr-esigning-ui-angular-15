@@ -269,11 +269,9 @@ main {
 }
 
 .droppables {
-    border: 1px dashed #5abf5a;
-    background-color: #F5FDFA !important;
+    /*border: 1px dashed #5abf5a;*/
+    background-color: transparent; !important;
     color: #5abf5a !important;
-    max-width: 80%;
-    max-height: 200px;
 }
 
 .contr_det_nav {
@@ -285,6 +283,32 @@ main {
     /*resize: both;*/
 }
 
+.selection-element{
+    text-transform: none; 
+    width: 100% !important; 
+    background: #fff !important; 
+    padding: 2px; 
+    margin-bottom: 20px; 
+    border: 1px solid #0c77f8 !important;
+}
+
+.dlt_btn, .btn_ok, .btn_close{
+    font-size: 18px;
+    padding: 0px 3px;
+    /* border: 1px solid #fff; */
+    box-shadow: none !important;
+    color: #c8e0fd !important;
+}
+
+.btn_close{
+    font-size: 16px !important;
+}
+.btn_close:hover{
+    color: red !important;
+}
+.dlt_btn:hover{
+    color: red !important;
+}
 .margin_pro {
     margin-left: 5px !important;
 }
@@ -309,7 +333,7 @@ main {
 .context_list {
     list-style-type: none;
     margin: 0;
-    padding: 0px 5px 0px 5px;
+    padding: 0px 10px 10px 10px;
     text-align: left;
 }
 
@@ -2832,35 +2856,4 @@ button.ui-button::-moz-focus-inner {
 .signature {
     min-width: 125px;
     min-height: 36px;
-}
-
-.selection-element{
-    text-transform: none; 
-    width: 100% !important; 
-    background: #fff !important; 
-    padding: 2px; 
-    margin-bottom: 20px; 
-    border: 1px solid #0c77f8 !important;
-}
-
-.dlt_btn, .btn_ok, .btn_close{
-    font-size: 18px;
-    padding: 0px 3px;
-    /* border: 1px solid #fff; */
-    box-shadow: none !important;
-    color: #c8e0fd !important;
-}
-
-.btn_close{
-    font-size: 16px !important;
-}
-.btn_close:hover{
-    color: red !important;
-}
-.dlt_btn:hover{
-    color: red !important;
-}
-
-.btn_ok:hover{
-    color: green !important;
 }

@@ -8,6 +8,7 @@ angular.module('myApp', [
     'myApp.contractDetails',
     'myApp.createContract',
     'myApp.signContract',
+    'myApp.activity',
     'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider, $rootScope) {

@@ -54,65 +54,34 @@ angular.module('myApp.signContract', ['ngRoute'])
                 //   alert("canvas Signature upload Successfully.");
                 // angular.element('.item-color').css('color','red')
                 //  window.open(signaturePad.toDataURL());
-                var dataURL = signaturePad.toDataURL();
+                var dataUrl = signaturePad.toDataURL();
+                $('#img-tag').attr('src', dataUrl)
+                    // dataUrl = dataUrl.replace('data:image/png;base64,', '');
 
 
 
-                var dataUrl = signaturePad.toDataURL("image/jpeg");
+                // var dataUrl = signaturePad.toDataURL("image/jpeg");
 
 
-                var byteString = atob(dataUrl.split(',')[1]);
-
-                var mimeString = dataUrl.split(',')[0].split(':')[1].split(';')[0]
-
-                var ab = new ArrayBuffer(byteString.length);
-                var ia = new Uint8Array(ab);
-                for (var i = 0; i < byteString.length; i++) {
-                    ia[i] = byteString.charCodeAt(i);
-                }
-
-                var blob = new Blob([ab], { "type": mimeString });
 
                 // var blob = dataURItoBlob(dataUrl);
+                console.log(dataUrl)
+                var formData = {
 
-                var formData = new FormData();
-                formData.append("esigndoc", blob);
-                $.ajax({
-                    url: 'http://staging-1.crossdottr.com/party/token/' + $routeParams.token + '/field/23/object', //Server script to process data
-                    type: 'POST',
-                    headers: {
-                        // 'X-AUTH-TOKEN': localStorage.getItem('AUTH-TOKEN')
-                    },
-                    xhr: function() { // Custom XMLHttpRequest
-                        var myXhr = $.ajaxSettings.xhr();
-                        return myXhr;
-                    },
-                    //Ajax events
-                    success: function(response) {
+                    data: dataUrl
 
+                };
+                console.log($('.SIGNATURE').attr('id'))
+                var id = $('.SIGNATURE').attr('id');
+                httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/object', formData)
+                    .success(function(response) {
+                        console.log(1, response);
+                        // $rootScope.contractId = response;
+                        //  $rootScope.contractForm.id = response;
+                        // $window.location.href = '/#!/contract/' + response;
 
+                    })
 
-
-                    },
-                    //  error: this.errorHandler,
-                    // Form data
-                    data: formData,
-                    //Options to tell jQuery not to process data or worry about content-type.
-                    cache: false,
-                    contentType: false,
-                    processData: false
-                });
-
-
-
-                // httpRequestService.post('/party/token/' + $routeParams.token + '/field/23/object', formData)
-                //     .success(function(response) {
-                //         console.log(1, response);
-                //         // $rootScope.contractId = response;
-                //         //  $rootScope.contractForm.id = response;
-                //         // $window.location.href = '/#!/contract/' + response;
-
-                //     })
             }
         });
         $scope.shoSignaturePad = function() {
@@ -120,22 +89,72 @@ angular.module('myApp.signContract', ['ngRoute'])
             angular.element('.popup_style').hide();
         }
         $scope.saveText = function(id) {
-            //console.log(type, $('#'+id).val())
             var formData = {
-
-                "key": "field_freetext",
-                "field_freetext": $('#' + id).val(),
-                "type": "text",
-                "enabled": true
-
+                data: $('#' + id).val()
             };
-            console.log(formData)
-            httpRequestService.post("/party/token/" + $routeParams.token + "/field/" + id + "/text", formData)
+
+
+            httpRequestService.post('/party/token/' + $routeParams.token + '/field/' + id + '/json/text', formData)
                 .success(function(response) {
                     console.log(1, response);
 
+                })
+
+        }
+        $scope.signContract = function() {
+            console.log(1)
+            httpRequestService.post('/sign/contract/' + $routeParams.token)
+                .success(function(response) {
+                    $('.mb20').remove();
+                    $('#success').show()
 
                 })
+        }
+        $scope.saveFile = function(event) {
+            var formData = new FormData();
+            formData.append('data', event[0]);
+ var id = angular.element('.upload-file').attr('id');
+console.log(formData)
+
+
+ httpRequestService.post("party/token/" + $routeParams.token + "/field/" + id+ "/json/object", formData)
+                    .success(function(response) {
+                        console.log(1, response);
+                        // $rootScope.contractId = response;
+                        //  $rootScope.contractForm.id = response;
+                        // $window.location.href = '/#!/contract/' + response;
+
+                    })
+
+
+            // $.ajax({
+            //     url: "party/token/" + $routeParams.token + "/field/" + id+ "/object", //Server script to process data
+            //     type: 'POST',
+            //     headers: {
+            //         'X-AUTH-TOKEN': localStorage.getItem('AUTH-TOKEN')
+            //     },
+            //     xhr: function() { // Custom XMLHttpRequest
+            //         var myXhr = $.ajaxSettings.xhr();
+            //         return myXhr;
+            //     },
+            //     //Ajax events
+            //     success: function(response) {
+
+            //        console.log(response)
+
+
+            //     },
+            //     error: function(response) { console.log(response)
+            //         //$window.location.href = '/#!/login';
+            //     },
+            //     //  error: this.errorHandler,
+            //     // Form data
+            //     data: formData,
+            //     //Options to tell jQuery not to process data or worry about content-type.
+            //     cache: false,
+            //     contentType: false,
+            //     processData: false
+            // });
 
         }
         httpRequestService.get('/view/contract/thumbnails/' + $routeParams.token)
@@ -146,20 +165,33 @@ angular.module('myApp.signContract', ['ngRoute'])
                 httpRequestService.get('/party/' + $routeParams.token + '/fields')
                     .success(function(response) {
                         $scope.fileds = response;
+                        console.log(response)
+                        for (var i = 0; i < response.length; i++) {
+                            if (response[i].fieldType == 'SIGNATURE' && response[i].objectId != '') {
+                                // /party/token/55eda84d-d629-4ff2-a24d-6525e57379d4/field/9/object
+                                //    party/token/1fcdc50a-8253-4230-ba28-c50de8faf33c/field/9/object?format=datauri
+                                httpRequestService.get('/party/token/' + $routeParams.token + '/field/' + response[i].id + '/object?format=datauri')
+                                    .success(function(responseUrl) {
+                                        // var responseUrl1 = 
+                                        // console.log(1, responseUrl);
+                                        // var b64Response = btoa(unescape(encodeURIComponent(responseUrl)));
 
+                                        // // create an image
+                                        // //var outputImg = document.createElement('img');
+                                        // var outputImg = 'data:image/png;base64,' + b64Response;
+                                        $scope.utl = responseUrl;
+                                        console.log(responseUrl)
+                                    })
+                            }
+                        }
                         var date = new Date();
                         //  $scope.date = date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2);
                         $scope.filedVal = {
-                            'NAME': '',
-                            'FREE_TEXT': '',
+                            //  'NAME': response.text,
+                            // 'FREE_TEXT': response.text,
                             'DATE': date.getFullYear() + '-' + ('0' + (date.getMonth() + 1)).slice(-2) + '-' + ('0' + date.getDate()).slice(-2)
                         }
                     })
-                    // var file = new Blob([response], { type: 'application/pdf' });
-                    // var fileURL = URL.createObjectURL(file);
-                    //   $scope.imageUrl = fileURL;
-                    //  $('#send-signee').show();
-                    // $('#contract-details').remove();
 
             })
     })
