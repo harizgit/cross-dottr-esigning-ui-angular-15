@@ -198,7 +198,40 @@ angular.module('myApp.createContract', ['ngRoute'])
             angular.element('.remove-signee-field').on('click', function() {
                 console.log(1)
             })
-        })
+        });
+        $scope.executed = false;                
+        setCkEditor();
+        function ckEditorInit(name){
+            CKEDITOR.replace(name,{
+                toolbar :
+                    [
+                        { name: 'styles', items : [ 'Font','FontSize' ] },
+                        { name: 'colors', items: [ 'TextColor' ] },
+                        { name: 'basicstyles', items :[ 'Bold','Italic','Underline' ] },
+                        { name: 'paragraph', items : [ 'JustifyLeft','JustifyCenter','JustifyRight' ] },
+                        { name: 'frt', items:[ 'BulletedList','-' ]}
+                    ]
+            });
+        }
+        function setCkEditor(){
+            // var key = 'executed';
+            var name = 'email-body';
+            if(!$scope.executed){
+                if(jQuery('#'+name).length==1){
+                    //var editor = CKEDITOR.instances[name];
+                    //if (editor) { editor.destroy(true); }
+                    ckEditorInit(name);
+                    $scope.executed  = true;
+                    //$window.localStorage.setItem(key,true);
+                }else{
+                    $timeout(function(){
+                        ckEditorInit(name);
+                        $scope.executed  = true;
+                        //$window.localStorage.setItem(key,true);
+                    },1000);
+                }
+            }
+        }
 
     });
 

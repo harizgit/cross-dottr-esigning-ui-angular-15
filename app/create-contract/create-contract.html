@@ -100,35 +100,39 @@
             <div class="box-header">
                 <h3>Compose Cover Email</h3>
             </div>
-            <div class="box-body white">
-
-
+            <div class="box-body white border">
                 <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" id="subject" placeholder="Subject (e.g Contract for Review)">
                         <div class="text-muted mb20 mt4">This message will be sent to everyone invited to sign the document</div>
                     </div>
-
+                    <div class="form-group">
+                        <textarea id="email-body"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <button class="btn btn-grey">
+                            Save Draft
+                        </button>
+                    </div>
                 </form>
-                <div class="summernote-editor" ui-jp="summernote" ui-options="{height: 250,
-                          toolbar: [
-                            ['style', ['bold', 'italic', 'underline', 'clear']],
-                            ['color', ['color']],
-                            ['para', ['ul', 'ol', 'paragraph']],
-                            ['height', ['height']]
-                          ]}">
-                </div>
-
-
-
-                <textarea class="form-control" rows="14" placeholder="Message..."></textarea>
-
-                <button type="submit" class="btn btn-default style-button" style="margin-top: 15px;">Save Draft</button>
+                <!--<div class="summernote-editor" ui-jp="summernote" ui-options="{height: 250,-->
+                          <!--toolbar: [-->
+                            <!--['style', ['bold', 'italic', 'underline', 'clear']],-->
+                            <!--['color', ['color']],-->
+                            <!--['para', ['ul', 'ol', 'paragraph']],-->
+                            <!--['height', ['height']]-->
+                          <!--]}">-->
+                <!--</div>-->
             </div>
-
-            <div class="page-action col-md-12" style="text-align: right;">
-                <button class="btn success" ng-click="updatePartyFileds()">Add Fields <i class="material-icons md-24"></i></button>
-                <a href="/#!/activity" class="btn btn-danger secondary">Cancel</a>
+            <div class="col-sm-12 plr0 no-padding-sm  margin-top-sm">
+                <div class="pull-right">
+                    <button class="btn btn-success">
+                        <i style="padding-right: 20px" class="fa  fa-file-text-o"></i>Add Fields...
+                    </button>
+                    <button class="btn btn-danger">
+                        Cancel
+                    </button>
+                </div>
             </div>
         </div>
     </div>
