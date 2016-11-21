@@ -1,30 +1,4 @@
-<!-- <div class="">
-    <h1 class="ui header">Create a Contract: </h1>
-    <form class="ui form" ng-submit="createContract()">
-        <div class="ui segment">
-            <div class="field">
-                <label>Contract Name</label>
-                <input id="contract-name" ng-model="contractName" type="text" name="name" required>
-            </div>
-            <div class="field">
-                <label>File to Upload</label>
-                <input id="esigndoc" name="esigndoc" type="file" onchange="angular.element(this).scope().fileUpload(this.files)" required>
-            </div>
-            <div class="field">
-                <label>Email Address</label>
-                <input id="email" type="email" ng-model="email" name="emailAddress" placeholder="Email" required>
-            </div>
-            <div class="field">
-                <label>Full Name</label>
-                <input id="full-name" type="text" ng-model="fullName" name="fullName" placeholder="Full Name" required>
-            </div>
-        </div>
-        <div ng-if="errorMessage">
-            <div class="ui red message">{{errorMessage}}</div>
-        </div>
-        <button class="ui primary button" ng-click="save(f.valid, f.form.value)" type="submit">Create</button>
-    </form>
-</div> -->
+
 <div class="row">
     <div class="col-sm-12">
         <nav>
@@ -40,60 +14,84 @@
     <div class="col-md-4">
         <div class="box">
             <div class="box-header">
-                <h3>Doc Name</h3>
-                <input id="doc-name" type="text" name="doc-name" required class="form-control">
-            </div>
-
-            <div class="box-header">
                 <h3>Upload Document</h3>
+
+                
             </div>
             <div class="box-body white mb20">
-                <form role="form">
+                  <input id="doc-name" type="text" name="doc-name" required class="form-control" placeholder="Document Name">
+
+                   <div class="box-body white" style="display: none;">
+                        <div>
+                            <i class="text-md fa fa-file-pdf-o mr10"></i> 
+                            <strong id="docName" ng-controller='CreateContractCtrl' ng-app="myApp">{{ documentName }}
+                            </strong>
+                            <a href class="nav-link pull-right">
+                                <i class="material-icons md-20"></i>
+                             </a>
+                        </div>
+                    </div>
+
+                   
+
+                  <form role="form">
+                    <div id="progress-wrp"><div class="progress-bar"></div ><div class="status">0%</div></div>
+                    <div class="text-muted mt10">Upload the documents you want to get signed</div> 
                     <label for="esigndoc" class="btn primary"><i class="material-icons md-20"></i> Upload File</label>
-                    <!-- <input id="files" style="visibility:hidden;" type="file"> -->
-                    <input id="esigndoc" style="visibility:hidden;" name="esigndoc" type="file" class="btn primary" onchange="angular.element(this).scope().fileUpload(this.files)" required>
-                    <!-- <button type="submit" class="btn primary"><i class="material-icons md-20"></i> Upload File</button> -->
-                    <div class="text-muted mt10">Upload the documents you want to get signed</div>
-                    <!-- <div>mcNuggets_purchaseOrder.pdf</div> -->
+                    
+                    <input style="width:30%; visibility: hidden;" id="esigndoc" name="esigndoc" type="file" class="btn primary" onchange="angular.element(this).scope().fileUpload(this.files)" required accept=".pdf">
+                   
+                  
                 </form>
             </div>
-            <div class="box-body white" style="display: none;">
-                <div><i class="text-md fa fa-file-pdf-o mr10"></i> <strong id="docName" ng-controller='CreateContractCtrl' ng-app="myApp" >{{ documentName }}</strong>
-                    <a href class="nav-link pull-right">
-                        <i class="material-icons md-20"></i>
-                    </a>
-                </div>
-            </div>
+           
+           
+           
         </div>
         <div class="box">
             <div class="box-header">
                 <h3>Who Needs to Sign?</h3>
             </div>
-            <form role="form" id="party-form">
+
+                      
+            <form role="form" id="party-form" >
                 <div class="box-body white mb20 party-field-container">
+                    
                     <div class="form-group">
                         <label for="name1">Name & Email</label>
-                        <input type="text" class="form-control name" id="name1" value="" placeholder="Name" required="">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-user" aria-hidden="true"></i>
+                            </div>
+                            <input trequired ype="text" class="form-control firstname" id="name1" value="" placeholder="First name" required="">
+                        </div>
                     </div>
+
+
                     <div class="form-group">
-                        <input type="email" class="form-control email" id="email1" value="" placeholder="Enter email" required="">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="glyphicon glyphicon-star-empty" aria-hidden="true"></i>
+                            </div>
+                            <input required type="text" class="form-control lastname" id="name2" value="" placeholder="Last name" required="">
+                        </div>
                     </div>
+
+                    <div class="form-group">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                <i class="form-control-feedback glyphicon glyphicon-envelope"></i>
+                            </div>
+                            <input type="email" required class="form-control email field-style" id="email1" value="" placeholder="Their Email">
+                        </div>
+                    </div>
+                    
                 </div>
+
             </form>
-            <!--  <div class="box-body white mb20">
-                <form role="form">
-                  <div class="form-group">
-                    <label for="name2">Name & Email</label>
-                    <input type="text" class="form-control" id="name2" placeholder="Name">
-                  </div>
-                  <div class="form-group">
-                    <input type="email" class="form-control" id="email2" placeholder="Enter email">
-                  </div>
-                  <a class="text-sm" href><i class="fa fa-trash-o"></i> <strong>Remove Signer</strong></a>
-                </form>
-              </div> -->
-            <!-- Add signee button -->
-            <button type="submit" class="btn btn-dashed" ng-click="addPartyFileds();"><i class="material-icons md-20"></i> Add Signer</button>
+            <input type="submit" class="btn btn-default style-button" ng-click="addPartyFileds();" value="Add Signer">
+
+         
         </div>
     </div>
     <!-- Cover Email -->
@@ -103,11 +101,14 @@
                 <h3>Compose Cover Email</h3>
             </div>
             <div class="box-body white">
+
+
                 <form role="form">
                     <div class="form-group">
                         <input type="text" class="form-control" id="subject" placeholder="Subject (e.g Contract for Review)">
                         <div class="text-muted mb20 mt4">This message will be sent to everyone invited to sign the document</div>
                     </div>
+
                 </form>
                 <div class="summernote-editor" ui-jp="summernote" ui-options="{height: 250,
                           toolbar: [
@@ -117,14 +118,19 @@
                             ['height', ['height']]
                           ]}">
                 </div>
+
+
+
+                <textarea class="form-control" rows="14" placeholder="Message..."></textarea>
+
+                <button type="submit" class="btn btn-default style-button" style="margin-top: 15px;">Save Draft</button>
+            </div>
+
+            <div class="page-action col-md-12" style="text-align: right;">
+                <button class="btn success" ng-click="updatePartyFileds()">Add Fields <i class="material-icons md-24"></i></button>
+                <a href="/#!/activity" class="btn btn-danger secondary">Cancel</a>
             </div>
         </div>
     </div>
     <!-- End Cover Email -->
-</div>
-<div class="row">
-    <div class="page-action col-md-12">
-        <button class="btn success" ng-click="updatePartyFileds()">Add Fields <i class="material-icons md-24"></i></button>
-        <a href="index.html" class="btn secondary">Cancel</a>
-    </div>
 </div>

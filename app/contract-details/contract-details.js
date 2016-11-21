@@ -9,8 +9,19 @@ angular.module('myApp.contractDetails', ['ngRoute'])
             controllerAs: 'vm'
         });
     }])
-    .controller('ContractDetailCtrl', function($scope, $http, $rootScope, $routeParams, httpRequestService) {
+    .controller('ContractDetailCtrl', function($scope, $http, $rootScope, $routeParams, httpRequestService, $window) {
         var vm = this;
+
+
+        angular.element($window).bind("scroll", function(e) {
+            
+            var elemTop = $('#dropp').scrollTop();
+            console.log('scroll', $(window).scrollTop(), $('#dropp').offset().top)
+            if($(window).scrollTop() > 200)
+                $('.menu-items').addClass('fixed-menu')
+            else 
+                $('.menu-items').removeClass('fixed-menu')
+        })
         if (localStorage.getItem('AUTH-TOKEN'))
             $rootScope.login = true;
         $scope.contractDetails = '';
@@ -56,12 +67,12 @@ angular.module('myApp.contractDetails', ['ngRoute'])
                                 cursor: 'move',
                                 // snap: '.droppable',
                                 appendTo: '.document-content',
-                                containment:'#dropp',
+                                containment: '#dropp',
                                 revert: "invalid",
 
 
-                            }); 
-                            var obj = $scope.contractDetails;   
+                            });
+                            var obj = $scope.contractDetails;
                             angular.element(".droppable").droppable({
 
                                 drop: function(e, ui) {
@@ -81,7 +92,7 @@ angular.module('myApp.contractDetails', ['ngRoute'])
                                         this.x.draggable({
                                             helper: 'ui-resizable-helper',
                                             // containment: angular.element(this),
-                                            containment:'#dropp',
+                                            containment: '#dropp',
 
                                             tolerance: 'fit',
                                             stop: function(event, ui) {

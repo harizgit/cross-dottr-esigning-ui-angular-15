@@ -1,33 +1,8 @@
 <br style="clear: both;">
-<!-- <div class="padding container"> -->
-<!--  <div class="row mb10">
-        <div class="col-md-12">
-          <div class="dragable-action">
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-pencil"></i> Signature</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Initials</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Name</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Date Picker</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-terminal"></i> Free Text</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="fa fa-check-square"></i> Checkbox</button>
-            <button class="btn btn-sm btn-outline b-primary text-primary"><i class="material-icons md-20"></i> Required Upload</button>
-          </div>
-        </div>
-      </div> -->
-<!-- </div> -->
+
 <div class="">
     <div class="ui grid">
-        <!--   <div class="row" id="send-signee" style="display: none;">
-            <section> {{contract.document.fileName}}</section>
-            <section>
-                <h1>Choosen Recipient</h1>
-                <div ng-repeat="party in contract.parties">
-                    Name: {{party.user.fullName}}
-                    Email: {{party.user.emailAddress}}
-                </div>
-                <button id="send-sign" ng-click="sendForSign()">Send for signing</button>
-            </section>
-        </div>
- -->
+ 
         <div id="send-signee-review" style="display:none; color: green;font-size: 20px;margin-top: 140px;">
             Successfully created the document. It has been sent to the partee for signing.
         </div>
@@ -61,7 +36,7 @@
                     <form role="form">
                         <div class="form-group">
                             <div class="text-muted">Name</div>
-                            <div>{{party.user.fullName}}</div>
+                            <div>{{party.user.firstName}}</div>
                         </div>
                         <div class="form-group">
                             <div class="text-muted">Email</div>
@@ -91,8 +66,8 @@
                 <div class="container menu-contanier" style="float: left;
 width: 100%;margin-top: 0px;">
                     <div class="row">
-                        <div style="float: left;">
-                            <div class="col-md-12 test">
+                        <div style="float: left;width: 100%;">
+                            <div class="col-md-12 test" >
                                 <div class="menu-items">
                                     <div id="popup-container1" class="popup_style">
                                         <ul class="context_list" ng-click="$event.stopPropagation()">
@@ -105,7 +80,7 @@ width: 100%;margin-top: 0px;">
                                             <li>
                                                 <select id="SIGNATURE" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
                                             </li>
@@ -136,7 +111,7 @@ width: 100%;margin-top: 0px;">
                                             <li style="margin-bottom: 20px">
                                                 <select id="INITIALS" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
                                             </li>
@@ -154,7 +129,7 @@ width: 100%;margin-top: 0px;">
                                     <!-- Name Popup -->
                                     <div id="popup-container3" class="popup_style">
                                         <ul class="context_list" ng-click="$event.stopPropagation()">
-                                            <li style="text-align: right; >
+                                            <li style="text-align: right;">
                                                 <button type=" button" ng-click="hideElement()" class="btn btn-default btn_close" title="Close" >
                                                 <i class="fa fa-times" aria-hidden="true"></i>
                                                 </button>
@@ -163,7 +138,7 @@ width: 100%;margin-top: 0px;">
                                             <li style="margin-bottom: 20px">
                                                 <select id="NAME" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
 
@@ -194,7 +169,7 @@ width: 100%;margin-top: 0px;">
                                             <li style="margin-bottom: 15px">
                                                 <select id="DATE" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
 
@@ -224,7 +199,7 @@ width: 100%;margin-top: 0px;">
                                             <li style="margin-bottom: 15px">
                                                 <select id="FREE_TEXT" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
 
@@ -249,7 +224,7 @@ width: 100%;margin-top: 0px;">
                                             <li>
                                                 <select id="CHECK_BOX" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
                                             </li>
@@ -271,7 +246,7 @@ width: 100%;margin-top: 0px;">
                                             <li style="margin-bottom: 15px">
                                                 <select id="DATE" class="selection-element">
                                                     <option ng-repeat="party in contract.parties" value="{{party.user.id}}">
-                                                        {{party.user.fullName}}
+                                                        {{party.user.firstName}}
                                                     </option>
                                                 </select>
 
@@ -320,7 +295,7 @@ width: 100%;margin-top: 0px;">
                                         <div class="panel-body">
                                             <div id="draggable-signature" class="draggable-signature">
                                                 <div class="nav_con_det_menu" modal="popup-container4">
-                                                    <i class="material-icons md-20"></i> Date Picker
+                                                    <i class="material-icons md-20"></i> Signed on
                                                 </div>
                                             </div>
                                         </div>
